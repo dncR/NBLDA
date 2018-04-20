@@ -9,15 +9,13 @@
 setMethod(f = "predict", signature = signature(object = "nblda"), definition = predict.nblda)
 
 
+###### Show Methods  ########
 
-### Print Methods for returned objects.
-
-#' @title Print Method for the \code{nblda} Class
+#' @title Show Method for the \code{nblda} Class
 #'
-#' @description  Print the results of an object returned from \code{\link{trainNBLDA}}.
+#' @description  Show the results of an object returned from \code{\link{trainNBLDA}} on R console.
 #'
-#' @param x an object of class \code{nblda} to be printed.
-#' @param \dots further arguments to be passed to \code{\link[base]{print}}.
+#' @param object an object of class \code{nblda} to be printed.
 #'
 #' @author Dincer Goksuluk
 #'
@@ -34,18 +32,21 @@ setMethod(f = "predict", signature = signature(object = "nblda"), definition = p
 #' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
 #'                   metric = "accuracy", train.control = ctrl)
 #'
-#' print(fit)
+#' show(fit)
 #' }
 #'
-#' @name print
-#' @rdname print
+#' @name show
+#' @rdname show
 #'
-#' @method print nblda
-print.nblda <- function(x, ...){
+#' @importFrom methods show
+#' @method show nblda
+show.nblda <- function(object){
   cat("DONE...")
 }
 
-#' @rdname print
+#' @rdname show
 #'
 #' @export
-setMethod(f = "print", signature = signature(x = "nblda"), definition = print.nblda)
+setMethod(f = "show", signature = signature(object = "nblda"), definition = show.nblda)
+
+

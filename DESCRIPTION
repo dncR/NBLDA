@@ -8,12 +8,29 @@ Maintainer: Dincer Goksuluk <dincer.goksuluk@hacettepe.edu.tr>
 Description: NBLDA is a package for classification which uses Negative Binomial distribution with Linear Discriminant Analysis. It is basically an extension of
  PoiClaClu package to Negative Binomial distribution. We support only the classification task with this version. However, the clustering task will be included with the following versions.
 Imports:
+  caret,
   PoiClaClu,
   sSeq,
   edgeR,
-  DESeq2
+  DESeq2,
+  methods
+Suggests:
+  knitr
 License: GPL(>=2)
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
+Collate: 
+    'FindBestTransform.R'
+    'all_classes.R'
+    'all_generics.R'
+    'control.R'
+    'generateCountData.R'
+    'getShrinkedDispersions.R'
+    'helper_functions.R'
+    'normalize_counts.R'
+    'package_and_supplementary.R'
+    'predict.nblda.R'
+    'trainNBLDA.R'
+    'zzz_methods.R'

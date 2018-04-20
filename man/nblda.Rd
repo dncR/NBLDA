@@ -13,7 +13,7 @@ of objects is created as a result of \code{trainNBLDA} function of \code{NBLDA} 
 It is then used in \code{predict} function for predicting class labels of new samples.
 }
 \note{
-nblda.trained icerisinde yer alan slotlarin aciklamalari burada verilecek.
+nblda icerisinde yer alan slotlarin aciklamalari burada verilecek.
 }
 \section{Slots}{
 

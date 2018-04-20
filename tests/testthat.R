@@ -1,3 +1,3 @@
-library("testthat")
-library("MLSeq")
-test_check("MLSeq")
+# library("testthat")
+# library("MLSeq")
+# test_check("MLSeq")

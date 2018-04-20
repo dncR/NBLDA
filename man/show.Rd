@@ -5,17 +5,23 @@
 \alias{show}
 \alias{show.nblda}
 \alias{show,nblda-method}
-\title{Show Method for the \code{nblda} Class}
+\alias{show.nblda_trained}
+\alias{show,nblda_trained-method}
+\title{Show Method for the S4 classes in NBLDA Package}
 \usage{
 \method{show}{nblda}(object)
 
 \S4method{show}{nblda}(object)
+
+\method{show}{nblda_trained}(object)
+
+\S4method{show}{nblda_trained}(object)
 }
 \arguments{
-\item{object}{an object of class \code{nblda} to be printed.}
+\item{object}{an object of class \code{nblda, nblda_trained} and \code{nblda_input} to be printed.}
 }
 \description{
-Show the results of an object returned from \code{\link{trainNBLDA}} on R console.
+Pretty print the objects in S4 classes on R console.
 }
 \examples{
 \dontrun{

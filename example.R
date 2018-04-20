@@ -27,12 +27,9 @@ allFolds <- lapply(1:rpt, function(x){
 })
 names(allFolds) <- paste("Repeat.", 1:rpt, sep = "")
 
-#
-# system.time({poicla <- PoiClaClu::Classify.cv(x, y, folds = allFolds$Repeat.1, transform = FALSE, type = "deseq")})[3]
-# system.time({poicla2 <- trainPLDA(x, y, type = "deseq", transform = FALSE, foldIdx = allFolds)})[3]
 
 # PLDA vs NBLDA
-ctrl <- ctrl2 <- control(folds = 5, repeats = 2, foldIdx = allFolds, phi.epsilon = 0, transform = FALSE,
+ctrl <- ctrl2 <- nbldaControl(folds = 5, repeats = 2, foldIdx = allFolds, phi.epsilon = 0.15, transform = FALSE,
                          truephi = NULL, target = 0, normalize.target = TRUE, delta = NULL, return.selected.gene.names = TRUE)
 
 ctrl2$truephi <- 0
@@ -44,8 +41,8 @@ pred1 <- predict.nblda(pldaRes, xte, "predictions")
 pldaRes$tuning.results[which(pldaRes$tuning.results[ ,1] == pldaRes$best.rho), ]
 confusionMatrix(table(Predicted = pred1, Actual = yte))$overall[1]  # PLDA
 
-nbldaRes <- trainNBLDA(x = x, y = y, type = "deseq", tuneLength = 20, metric = "accuracy", train.control = ctrl)
-pred2 <- predict.nblda(nbldaRes, xte, "predictions")
+nbldaRes <- trainNBLDA(x = x, y = y, type = "deseq", tuneLength = 10, metric = "accuracy", train.control = ctrl)
+pred2 <- predict.nblda(nbldaRes, xte, "every")
 
 nbldaRes$tuning.results[which(nbldaRes$tuning.results[ ,1] == nbldaRes$best.rho), ]
 confusionMatrix(table(Predicted = pred2, Actual = yte))$overall[1]   # NBLDA

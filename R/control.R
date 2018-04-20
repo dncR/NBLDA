@@ -60,17 +60,17 @@
 #'
 #' @examples
 #' \dontrun{
-#' control()  # return default control parameters.
+#' nbldaControl()  # return default control parameters.
 #' }
 #'
-#' @name control-NBLDA
-#' @rdname control
+#' @name nbldaControl-NBLDA
+#' @rdname nbldaControl
 #'
 #' @export
-control <- function(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL, beta = 1,
-                    prior = NULL, transform = FALSE, alpha = NULL, truephi = NULL, target = 0,
-                    phi.epsilon = 0.15, normalize.target = FALSE, delta = NULL, return.selected.gene.names = FALSE,
-                    multicore = FALSE, ...){
+nbldaControl <- function(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL, beta = 1,
+                         prior = NULL, transform = FALSE, alpha = NULL, truephi = NULL, target = 0,
+                         phi.epsilon = 0.15, normalize.target = FALSE, delta = NULL, return.selected.gene.names = FALSE,
+                         multicore = FALSE, ...){
 
   if (repeats <= 0 | is.null(repeats)){
     repeats <- 1

@@ -66,6 +66,8 @@ predict.nblda <- function(object, test.data, return = c("predictions", "everythi
       stop("alpha must be between 0 and 1")
     }
     xte <- xte^alpha
+  } else {
+    alpha <- NULL
   }
 
   ### prior trained model'den alınacak.

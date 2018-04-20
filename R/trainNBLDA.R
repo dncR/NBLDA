@@ -141,6 +141,11 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
         all(x != 1)
       }))
       selectedGenesNames <- colnames(x)[selectedGenesIdx]
+
+      ## If all features are selected, return NULL.
+      if (length(selectedGenesNames) == ncol(x)){
+        selectedGenesIdx <- selectedGenesNames <- NULL
+      }
     } else {
       selectedGenesIdx <- selectedGenesNames <- NULL
     }
@@ -175,6 +180,11 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
           all(x != 1)
         }))
         selectedGenesNames <- colnames(x)[selectedGenesIdx]
+
+        ## If all features are selected, return NULL.
+        if (length(selectedGenesNames) == ncol(x)){
+          selectedGenesIdx <- selectedGenesNames <- NULL
+        }
       } else {
         selectedGenesIdx <- selectedGenesNames <- NULL
       }
@@ -203,7 +213,7 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #' @param type a character string indicating the type of normalization method within the NBLDA model. See details.
 #' @param tuneLength a positive integer. This is the total number of levels to be used while tuning the model parameter(s).
 #' @param metric which criteria should be used while determining the best parameter? overall accuracu or avarage number of misclassified samples?
-#' @param train.control a list with control parameters to be used in NBLDA model. See \link{control} for details.
+#' @param train.control a list with control parameters to be used in NBLDA model. See \link{nbldaControl} for details.
 #' @param ... further arguments. Deprecated.
 #'
 #' @return give information about returned objects here.
@@ -246,7 +256,7 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #'
 #' @export
 trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLength = 10, metric = c("accuracy", "error"),
-                       train.control = control(), ...){
+                       train.control = nbldaControl(), ...){
 
   ####################################################################
   # type = "deseq"
@@ -362,9 +372,15 @@ trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLe
   colnames(tuningRes) <- c("rho", "accuracy", "errors", "nonzero")
 
   if (metric == "accuracy"){
-    best.rho <- tuningRes[, "rho"][max(which(tuningRes[, "accuracy"] == max(tuningRes[ ,"accuracy"])))]
+    best.idx <- max(which(tuningRes[, "accuracy"] == max(tuningRes[ ,"accuracy"])))
+    best.rho <- tuningRes[, "rho"][best.idx]
+    best.metric <- tuningRes[, "accuracy"][best.idx]
+    best.nonzero <- tuningRes[, "nonzero"][best.idx]
   } else if (metric == "error"){
-    best.rho <- tuningRes[, "rho"][max(which(tuningRes[, "errors"] == min(tuningRes[ ,"errors"])))]
+    best.idx <- max(which(tuningRes[, "errors"] == min(tuningRes[ ,"errors"])))
+    best.rho <- tuningRes[, "rho"][best.idx]
+    best.metric <- tuningRes[, "errors"][best.idx]
+    best.nonzero <- tuningRes[, "nonzero"][best.idx]
   }
 
   # Set transform to FALSE since data is already transformed above.
@@ -381,7 +397,8 @@ trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLe
 
   # Trained model object
   result.list <- new("nblda_trained",
-                     crossValidated = list(tuning.results = tuningRes, best.rho = best.rho),
+                     crossValidated = list(tuning.results = tuningRes, best.rho = best.rho,
+                                           best.metric = best.metric, best.nonzero = best.nonzero, metric = metric),
                      finalModel = final.model[[1]],
                      control = tc)
 

@@ -7,7 +7,7 @@
 \usage{
 trainNBLDA(x, y, type = c("mle", "deseq", "quantile", "tmm"),
   tuneLength = 10, metric = c("accuracy", "error"),
-  train.control = control(), ...)
+  train.control = nbldaControl(), ...)
 }
 \arguments{
 \item{x}{a n-by-p data frame or matrix. Samples should be in the rows and variables in the columns. Used to train the classifier.}
@@ -20,7 +20,7 @@ trainNBLDA(x, y, type = c("mle", "deseq", "quantile", "tmm"),
 
 \item{metric}{which criteria should be used while determining the best parameter? overall accuracu or avarage number of misclassified samples?}
 
-\item{train.control}{a list with control parameters to be used in NBLDA model. See \link{control} for details.}
+\item{train.control}{a list with control parameters to be used in NBLDA model. See \link{nbldaControl} for details.}
 
 \item{...}{further arguments. Deprecated.}
 }

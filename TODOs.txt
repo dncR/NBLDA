@@ -1,0 +1,7 @@
+Yapılacaklar:
+
+* Cross-validated ile seçilen değişken sayısı ile finalModel'de seçilen değişken sayıları uyumlu değil. Bu kısım incelenecek.
+
+* selectedGenes() yazılacak.
+* confusionMat() yazılacak.
+* Grafikler eklenecek.

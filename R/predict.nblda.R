@@ -25,8 +25,6 @@
 #'
 #' @author Dincer Goksuluk
 #'
-#' @seealso \code{\link{predict}}
-#'
 #' @examples
 #' \dontrun{
 #' set.seed(2128)
@@ -35,7 +33,7 @@
 #' x <- t(counts$x + 1)
 #' y <- counts$y
 #' xte <- t(counts$xte + 1)
-#' ctrl <- control(folds = 2, repeats = 2)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2)
 #'
 #' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
 #'                   metric = "accuracy", train.control = ctrl)

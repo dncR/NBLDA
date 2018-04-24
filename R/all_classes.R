@@ -12,13 +12,11 @@
 #'   \item{\code{control}:}{a list with controlling parameters for fitting NBLDA classifier.}
 #' }
 #'
-#' @note nblda_trained icerisinde yer alan slotlarin aciklamalari burada verilecek.
-#'
 #' @author Dincer Goksuluk
 #'
 #' @docType class
 #' @name nblda_trained-class
-#' @rdname nblda_trained
+#' @rdname nblda_trained-class
 #'
 #' @exportClass nblda_trained
 setClass("nblda_trained", slots = c(crossValidated = "list", finalModel = "list", control = "list"))
@@ -40,13 +38,11 @@ setClassUnion("class.labels", c("numeric", "integer", "factor"))
 #'   Should be either a numeric vector or factor.}
 #' }
 #'
-#' @note nblda_input icerisinde yer alan slotlarin aciklamalari burada verilecek.
-#'
 #' @author Dincer Goksuluk
 #'
 #' @docType class
 #' @name nblda_input-class
-#' @rdname nblda_input
+#' @rdname nblda_input-class
 #'
 #' @exportClass nblda_input
 setClass("nblda_input", slots = c(x = "count.data", y = "class.labels"))
@@ -63,18 +59,18 @@ setClass("nblda_input", slots = c(x = "count.data", y = "class.labels"))
 #' @section Slots:
 #'
 #' \describe{
-#'   \item{\code{input}:}{add description here}
-#'   \item{\code{result}:}{add description here}
-#'   \item{\code{call}:}{add description here}
+#'   \item{\code{input}:}{an \code{nblda_input} object including the count matrix (or data.frame) and class labels.}
+#'   \item{\code{result}:}{an \code{nblda_trained} object with elements from corss-validated and final models.}
+#'   \item{\code{call}:}{a call expression.}
 #' }
-#'
-#' @note nblda icerisinde yer alan slotlarin aciklamalari burada verilecek.
 #'
 #' @author Dincer Goksuluk
 #'
 #' @docType class
 #' @name nblda-class
-#' @rdname nblda
+#' @rdname nblda-class
+#'
+#' @seealso \code{\linkS4class{nblda_trained}}, \code{\linkS4class{nblda_input}}
 #'
 #' @exportClass nblda
 setClass("nblda",

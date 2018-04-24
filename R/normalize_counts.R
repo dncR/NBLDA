@@ -27,7 +27,7 @@
 #' xte.out$n  # Normalized counts for test set using train set parameters.
 #' }
 #'
-#' @name NullModel-NBLDA
+#' @name NullModel
 #' @rdname NullModel
 #'
 #' @export

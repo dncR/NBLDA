@@ -36,7 +36,7 @@
 #' getShrinkedDispersions(initial, 0, delta = 1)  # force to shrink 0.
 #' }
 #'
-#' @name getShrinkedDispersions-NBLDA
+#' @name getShrinkedDispersions
 #' @rdname getShrinkedDispersions
 #'
 #' @importFrom stats var

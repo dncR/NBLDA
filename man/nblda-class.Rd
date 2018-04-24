@@ -12,19 +12,19 @@ Objects can be created by calls of the form \code{new("nblda", ...)}. This type
 of objects is created as a result of \code{trainNBLDA} function of \code{NBLDA} package.
 It is then used in \code{predict} function for predicting class labels of new samples.
 }
-\note{
-nblda icerisinde yer alan slotlarin aciklamalari burada verilecek.
-}
 \section{Slots}{
 
 
 \describe{
-  \item{\code{input}:}{add description here}
-  \item{\code{result}:}{add description here}
-  \item{\code{call}:}{add description here}
+  \item{\code{input}:}{an \code{nblda_input} object including the count matrix (or data.frame) and class labels.}
+  \item{\code{result}:}{an \code{nblda_trained} object with elements from corss-validated and final models.}
+  \item{\code{call}:}{a call expression.}
 }
 }
 
+\seealso{
+\code{\linkS4class{nblda_trained}}, \code{\linkS4class{nblda_input}}
+}
 \author{
 Dincer Goksuluk
 }

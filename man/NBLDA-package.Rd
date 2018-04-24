@@ -33,7 +33,7 @@ Dincer Goksuluk, Gokmen Zararsiz, Selcuk Korkmaz, A. Ergun Karaagaoglu
 
 -----------------
 
-Maintainers:
+\strong{Maintainers:}
 
 Dincer Goksuluk (Correspondence), \email{dincer.goksuluk@hacettepe.edu.tr}
 

@@ -2,6 +2,7 @@
 # NOTE: If setMethod is included in the same file with the corresponding function 'predict.nblda', then aliases
 # are not required to be defined.
 
+##### Predictions ######
 #' @rdname predict
 #' @aliases predict,nblda-method
 #'
@@ -27,12 +28,14 @@ setMethod(f = "predict", signature = signature(object = "nblda"), definition = p
 #' x <- t(counts$x + 1)
 #' y <- counts$y
 #' xte <- t(counts$xte + 1)
-#' ctrl <- control(folds = 2, repeats = 2)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2)
 #'
 #' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
 #'                   metric = "accuracy", train.control = ctrl)
 #'
 #' show(fit)
+#' show(inputs(fit))
+#' show(nbldaTrained(fit))
 #' }
 #'
 #' @name show
@@ -99,7 +102,7 @@ show.nblda_trained <- function(object){
   # PART 2. Normalization and Resampling (Cross validation) info
   cat("Normalization: ", normalizationInfo, "\n", sep = "")
   cat("Power transformation is ", ifelse(object@control$transform, "performed.", "NOT performed."), "\n", sep = "")
-  cat("Resampling: Cross-Validated (", object@control$folds, " fold, repeated ", object@control$repeats, " times)", sep = "", "\n")
+  cat("Resampling: Cross-Validated (", object@control$folds, " folds, repeated ", object@control$repeats, " times)", sep = "", "\n")
 
   foldIdx <- object@control$foldIdx
   foldSampleSize <- n - unlist(lapply(unlist(foldIdx, recursive = FALSE), length))
@@ -112,11 +115,11 @@ show.nblda_trained <- function(object){
 
   cat("Summary of sample sizes: ", foldSampleSizeText, "\n", sep = "")
 
-  selectedGenesInfo <- object@finalModel$selectedGenes
-  featureSelectionText <- if (is.null(selectedGenesInfo$names)){
+  selectedFeaturesInfo <- object@finalModel$selectedFeatures
+  featureSelectionText <- if (is.null(selectedFeaturesInfo$names)){
     "All features are selected."
   } else {
-    paste(length(object@finalModel$selectedGenes$idx), " out of ", p, " features are selected.", sep = "")
+    paste(length(object@finalModel$selectedFeatures$idx), " out of ", p, " features are selected.", sep = "")
   }
   cat("Summary of selected features: ", featureSelectionText, "\n")
 
@@ -152,7 +155,66 @@ show.nblda_trained <- function(object){
 setMethod(f = "show", signature = signature(object = "nblda_trained"), definition = show.nblda_trained)
 
 
-###### Getter Functions #####
+#' @rdname show
+#'
+#' @method show nblda_input
+show.nblda_input <- function(object){
+
+  x <- object@x
+  y <- object@y
+
+  cat("x: Raw counts. A numeric ", class(x), ".", sep = "", "\n")
+  cat(" dims(rows, columns): ", nrow(x), " by ", ncol(x), sep = "", "\n")
+
+  rNames <- rownames(x)
+  cNames <- colnames(x)
+
+  rNamesText <- if (!is.null(rNames)){
+    if (length(rNames) > 3){
+      paste(paste(rNames[1:3], collapse = ", "), ", ...", sep = "")
+    } else {
+      paste(rNames, collapse = ", ")
+    }
+  }
+
+  cNamesText <- if (!is.null(cNames)){
+    if (length(cNames) > 3){
+      paste(paste(cNames[1:3], collapse = ", "), ", ...", sep = "")
+    } else {
+      paste(cNames, collapse = ", ")
+    }
+  }
+
+  cat(" rownames(", nrow(x), "): ", rNamesText, sep = "", "\n")
+  cat(" colnames(", ncol(x), "): ", cNamesText, sep = "", "\n\n")
+  cat("y: Class labels. A ", class(y), " vector.", sep = "", "\n")
+
+  yText <- if (!is.null(y)){
+    if (length(y) > 3){
+      paste(paste(y[1:3], collapse = ", "), ", ...", sep = "")
+    } else {
+      paste(y, collapse = ", ")
+    }
+  }
+  cat(" classes(", length(y), "): ", yText, sep = "", "\n")
+
+  yLevels <- levels(y)
+
+  yLevelsText <- if (length(yLevels) > 3){
+    paste(paste(yLevels[1:3], collapse = ", "), ", ...", sep = "")
+  } else {
+    paste(yLevels, collapse = ", ")
+  }
+  cat(" levels(", length(levels(y)), "): ", yLevelsText, sep = "", "\n\n")
+
+}
+
+#' @rdname show
+#'
+#' @export
+setMethod(f = "show", signature = signature(object = "nblda_input"), definition = show.nblda_input)
+
+###### Getter Functions #########
 
 ##### type (normalization) #######
 #' @title Accessors for the 'type' slot.
@@ -170,7 +232,18 @@ setMethod(f = "show", signature = signature(object = "nblda_trained"), definitio
 #'
 #' @examples
 #' \dontrun{
-#' 1L
+#' set.seed(2128)
+#' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
+#'                             allZero.rm = FALSE, tag.samples = TRUE)
+#' x <- t(counts$x + 1)
+#' y <- counts$y
+#' xte <- t(counts$xte + 1)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2)
+#'
+#' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
+#'                   metric = "accuracy", train.control = ctrl)
+#'
+#' normalization(fit)
 #'}
 #'
 #'@export
@@ -204,7 +277,18 @@ setMethod(f = "normalization", signature = signature(object = "nblda_trained"), 
 #'
 #' @examples
 #' \dontrun{
-#' 1L
+#' set.seed(2128)
+#' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
+#'                             allZero.rm = FALSE, tag.samples = TRUE)
+#' x <- t(counts$x + 1)
+#' y <- counts$y
+#' xte <- t(counts$xte + 1)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2)
+#'
+#' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
+#'                   metric = "accuracy", train.control = ctrl)
+#'
+#' control(fit)
 #'}
 #'
 #'@export
@@ -236,7 +320,18 @@ setMethod(f = "control", signature = signature(object = "nblda_trained"), functi
 #'
 #' @examples
 #' \dontrun{
-#' 1L
+#' set.seed(2128)
+#' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
+#'                             allZero.rm = FALSE, tag.samples = TRUE)
+#' x <- t(counts$x + 1)
+#' y <- counts$y
+#' xte <- t(counts$xte + 1)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2)
+#'
+#' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
+#'                   metric = "accuracy", train.control = ctrl)
+#'
+#' nbldaTrained(fit)
 #'}
 #'
 #'@export
@@ -250,3 +345,87 @@ setMethod(f = "nbldaTrained", signature = signature(object = "nblda_trained"), f
   object
 })
 
+
+###### inputs ######
+#' @title Accessors for the 'input' slot.
+#'
+#' @description This slot stores the input data for trained model.
+#'
+#' @docType methods
+#' @name inputs
+#' @rdname inputs
+#' @aliases inputs,nblda-method
+#'
+#' @param object an \code{nblda} object.
+#'
+#' @seealso \code{\link{trainNBLDA}}
+#'
+#' @examples
+#' \dontrun{
+#' set.seed(2128)
+#' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
+#'                             allZero.rm = FALSE, tag.samples = TRUE)
+#' x <- t(counts$x + 1)
+#' y <- counts$y
+#' xte <- t(counts$xte + 1)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2)
+#'
+#' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
+#'                   metric = "accuracy", train.control = ctrl)
+#'
+#' inputs(fit)
+#'}
+#'
+#'@export
+setMethod(f = "inputs", signature = signature(object = "nblda"), function(object){
+  object@input
+})
+
+###### selectedFeatures ######
+#' @title Accessors for the 'selectedFeatures' slot.
+#'
+#' @description This slot, if not NULL, stores the selected features/variables for sparse model.
+#'
+#' @docType methods
+#' @name selectedFeatures
+#' @rdname selectedFeatures
+#' @aliases selectedFeatures,nblda-method
+#'
+#' @param object an \code{nblda} or \code{nblda_trained} object.
+#'
+#' @return a list of selected features info including the followings:
+#' \item{idx}{column indices of selected features/variables}
+#' \item{names}{column names of selected features/variables if input data have pre-defined column names.}
+#'
+#' @note If \code{return.selected.features} = FALSE within \code{\link{nbldaControl}} or all features/variables
+#' are selected and used in discrimination function, \code{idx} and \code{names} are returned NULL.
+#'
+#' @seealso \code{\link{trainNBLDA}}, \code{\linkS4class{nblda}}, \code{\linkS4class{nblda_trained}}
+#'
+#' @examples
+#' \dontrun{
+#' set.seed(2128)
+#' counts <- generateCountData(n = 20, p = 50, K = 2, param = 1, sdsignal = 0.5, DE = 0.6,
+#'                             allZero.rm = FALSE, tag.samples = TRUE)
+#' x <- t(counts$x + 1)
+#' y <- counts$y
+#' xte <- t(counts$xte + 1)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2, return.selected.features = TRUE,
+#'                      transform = TRUE, phi.epsilon = 0.10)
+#'
+#' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
+#'                   metric = "accuracy", train.control = ctrl)
+#'
+#' selectedFeatures(fit)
+#'}
+#'
+#'@export
+setMethod(f = "selectedFeatures", signature = signature(object = "nblda"), function(object){
+  object@result@finalModel$selectedFeatures
+})
+
+#' @rdname selectedFeatures
+#' @aliases selectedFeatures,nblda_trained-method
+setMethod(f = "selectedFeatures", signature = signature(object = "nblda_trained"), function(object){
+  object@finalModel$selectedFeatures
+})

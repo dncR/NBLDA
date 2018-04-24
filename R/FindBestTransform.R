@@ -23,7 +23,7 @@
 #' FindBestTransform(x)
 #' }
 #'
-#' @name FindBestTransform-NBLDA
+#' @name FindBestTransform
 #' @rdname FindBestTransform
 #'
 #' @export

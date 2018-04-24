@@ -28,7 +28,7 @@
 #' head(counts$x)
 #' }
 #'
-#' @name generateCountData-NBLDA
+#' @name generateCountData
 #' @rdname generateCountData
 #'
 #' @importFrom stats rexp rnorm rnbinom runif sd var

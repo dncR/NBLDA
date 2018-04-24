@@ -25,7 +25,7 @@
 #' See \code{\link[sSeq]{getT}} for details.
 #' @param delta a weight within the interval [0, 1] that is used while shrinking dispersions towards 0. When "delta = 0", initial dispersion estimates
 #' are forced to be shrinked to 1. Similarly, if "delta = 0", no shrinkage is performed on initial estimates.
-#' @param return.selected.gene.names a logical. Should the selected genes' names be returned?
+#' @param return.selected.features a logical. Should the selected genes' names be returned?
 #' @param multicore a logical. If a parallel backend is loaded and available, the function runs in parallel CPUs.
 #' @param ... further arguements passed to \code{\link{trainNBLDA}}.
 #'
@@ -43,7 +43,8 @@
 #' observed counts. However, this is not a valid assumption in highly overdispersed count data. \code{NBLDA} performs a shrinkage on estimated
 #' overdispersions. Although the amount of shrinkage is dependent on several parameters such as \code{delta}, \code{target} and \code{truephi}, some
 #' of the shrinked overdispersions might be very close to 0. By defining a threshold value for shrinked overdispersions, it is possible to shrink
-#' very small overdispersions towards 0. If estimated overdispersion is below \code{phi.epsilon}, it is shrinked to 0.
+#' very small overdispersions towards 0. If estimated overdispersion is below \code{phi.epsilon}, it is shrinked to 0. If \code{phi.epsilon} = NULL,
+#' threshold value is set to 0. Hence, all the variables with very small overdispersion are included in the NBLDA model.
 #'
 #' @author Dincer Goksuluk
 #'
@@ -56,20 +57,20 @@
 #' Yu, D., Huber, W., & Vitek, O. (2013). Shrinkage estimation of dispersion in Negative Binomial models
 #' for RNA-seq experiments with small sample size. Bioinformatics, 29(10), 1275-1282.
 #'
-#' @seealso \code{\link[sSeq]{getT}} \code{\link[sSeq]{getAdjustDisp}}
+#' @seealso \code{\link[sSeq]{getT}}, \code{\link[sSeq]{getAdjustDisp}}
 #'
 #' @examples
 #' \dontrun{
 #' nbldaControl()  # return default control parameters.
 #' }
 #'
-#' @name nbldaControl-NBLDA
+#' @name nbldaControl
 #' @rdname nbldaControl
 #'
 #' @export
 nbldaControl <- function(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL, beta = 1,
                          prior = NULL, transform = FALSE, alpha = NULL, truephi = NULL, target = 0,
-                         phi.epsilon = 0.15, normalize.target = FALSE, delta = NULL, return.selected.gene.names = FALSE,
+                         phi.epsilon = 0.15, normalize.target = FALSE, delta = NULL, return.selected.features = FALSE,
                          multicore = FALSE, ...){
 
   if (repeats <= 0 | is.null(repeats)){
@@ -79,5 +80,5 @@ nbldaControl <- function(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL, be
   list(folds = folds, repeats = repeats, foldIdx = foldIdx, rhos = rhos, phi.epsilon = phi.epsilon, beta = beta,
        prior = prior, transform = transform, alpha = alpha, truephi = truephi,
        target = target, normalize.target = normalize.target, delta = delta,
-       return.selected.gene.names = return.selected.gene.names, multicore = multicore, ...)
+       return.selected.features = return.selected.features, multicore = multicore, ...)
 }

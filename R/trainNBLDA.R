@@ -1,6 +1,11 @@
 nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq", "quantile", "tmm"),
                   prior = NULL, transform = FALSE, alpha = NULL, truephi = NULL, phi.epsilon = 0.05,
-                  target = NULL, normalize.target = TRUE, delta = NULL, return.selected.gene.names = FALSE, ...){
+                  target = NULL, normalize.target = TRUE, delta = NULL, return.selected.features = FALSE, ...){
+
+  # xte = NULL; rhos = best.rho; beta = tc$beta; type = type; prior = tc$prior;
+  # transform = FALSE; alpha = alpha; return.selected.features = tc$return.selected.features;
+  # truephi = tc$truephi; target = tc$target; normalize.target = tc$normalize.target;
+  # delta = tc$delta; phi.epsilon = tc$phi.epsilon
 
   type <- match.arg(type)
 
@@ -9,6 +14,10 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
       warning("'target' should be non-negative. It is set to 0.")
       target <- 0
     }
+  }
+
+  if (is.null(phi.epsilon)){
+    phi.epsilon <- 0
   }
 
   if (is.null(xte)){
@@ -136,25 +145,28 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
       discriminant[ ,k] <- rowSums(xte * t(log(part1))) - colSums(part3) + log(prior[k])
     }
 
-    if (return.selected.gene.names){
-      selectedGenesIdx <- which(apply(ds, 2, function(x){
+    if (return.selected.features){
+      selectedFeaturesIdx.ds <- apply(ds, 2, function(x){
         all(x != 1)
-      }))
-      selectedGenesNames <- colnames(x)[selectedGenesIdx]
+      })
+
+      selectedFeaturesIdx.disperhat <- disperhat != 0
+      selectedFeaturesIdx <- which(selectedFeaturesIdx.ds | selectedFeaturesIdx.disperhat)
+      selectedFeaturesNames <- colnames(x)[selectedFeaturesIdx]
 
       ## If all features are selected, return NULL.
-      if (length(selectedGenesNames) == ncol(x)){
-        selectedGenesIdx <- selectedGenesNames <- NULL
+      if (length(selectedFeaturesNames) == ncol(x)){
+        selectedFeaturesIdx <- selectedFeaturesNames <- NULL
       }
     } else {
-      selectedGenesIdx <- selectedGenesNames <- NULL
+      selectedFeaturesIdx <- selectedFeaturesNames <- NULL
     }
 
 
     save <- list(list(ns = ns, nste = nste, ds = ds, discriminant = discriminant, ytehat = uniq[apply(discriminant, 1, which.max)],
                       alpha = alpha, rho = rhos, x = x, y = y, xte = xte, type = type, prior = prior, dispersions = disperhat.list,
                       transform = transform, trainParameters = null.out,
-                      selectedGenes = list(idx = selectedGenesIdx, names = selectedGenesNames)))
+                      selectedFeatures = list(idx = selectedFeaturesIdx, names = selectedFeaturesNames)))
   } else {
     save <- lapply(rhos, function(u){
       ds <- GetD(ns = ns, x = x, y = y, rho = u, beta = beta)
@@ -175,24 +187,27 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
         discriminant[ ,k] <- rowSums(xte * t(log(part1))) - colSums(part3) + log(prior[k])
       }
 
-      if (return.selected.gene.names){
-        selectedGenesIdx <- which(apply(ds, 2, function(x){
+      if (return.selected.features){
+        selectedFeaturesIdx.ds <- apply(ds, 2, function(x){
           all(x != 1)
-        }))
-        selectedGenesNames <- colnames(x)[selectedGenesIdx]
+        })
+
+        selectedFeaturesIdx.disperhat <- disperhat != 0
+        selectedFeaturesIdx <- which(selectedFeaturesIdx.ds | selectedFeaturesIdx.disperhat)
+        selectedFeaturesNames <- colnames(x)[selectedFeaturesIdx]
 
         ## If all features are selected, return NULL.
-        if (length(selectedGenesNames) == ncol(x)){
-          selectedGenesIdx <- selectedGenesNames <- NULL
+        if (length(selectedFeaturesNames) == ncol(x)){
+          selectedFeaturesIdx <- selectedFeaturesNames <- NULL
         }
       } else {
-        selectedGenesIdx <- selectedGenesNames <- NULL
+        selectedFeaturesIdx <- selectedFeaturesNames <- NULL
       }
 
       save.i <- list(ns = ns, nste = nste, ds = ds, discriminant = discriminant, ytehat = uniq[apply(discriminant, 1, which.max)],
                      alpha = alpha, rho = u, x = x, y = y, xte = xte, type = type, prior = prior, dispersions = disperhat.list,
                      transform = transform, trainParameters = null.out,
-                     selectedGenes = list(idx = selectedGenesIdx, names = selectedGenesNames))
+                     selectedFeatures = list(idx = selectedFeaturesIdx, names = selectedFeaturesNames))
       save.i
     })
   }
@@ -216,7 +231,10 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #' @param train.control a list with control parameters to be used in NBLDA model. See \link{nbldaControl} for details.
 #' @param ... further arguments. Deprecated.
 #'
-#' @return give information about returned objects here.
+#' @return an \code{nblda} object with following slots:
+#' \item{input}{an \code{nblda_input} object including the raw count data and response variable. See \code{\linkS4class{nblda_input}} for details.}
+#' \item{result}{an \code{nblda_trained} object including the results from cross-validated and final models. See \code{\linkS4class{nblda_trained}} for details.}
+#' \item{call}{a call expression.}
 #'
 #' @details NBLDA is proposed to classify count data from any field, e.g. economics, social sciences, genomics, etc.
 #' In RNA-Seq studies, for example, normalization is used to adjust between-sample differences for downstream analysis.
@@ -245,10 +263,23 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #' Genome Biology, 11:R25, doi:10.1186/gb-2010-11-3-r25
 #'
 #' @examples
-#' # Enter examples here.
-#' 1L
+#' \dontrun{
+#' set.seed(2128)
+#' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
+#'                             allZero.rm = FALSE, tag.samples = TRUE)
+#' x <- t(counts$x + 1)
+#' y <- counts$y
+#' xte <- t(counts$xte + 1)
+#' ctrl <- nbldaControl(folds = 2, repeats = 2)
 #'
-#' @name trainNBLDA-NBLDA
+#' fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
+#'                   metric = "accuracy", train.control = ctrl)
+#'
+#' fit
+#' nbldaTrained(fit)  # Cross-validated model summary.
+#' }
+#'
+#' @name trainNBLDA
 #' @rdname trainNBLDA
 #'
 #' @importFrom sSeq getT getAdjustDisp rowVars
@@ -257,13 +288,10 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #' @export
 trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLength = 10, metric = c("accuracy", "error"),
                        train.control = nbldaControl(), ...){
-
-  ####################################################################
   # type = "deseq"
-  # tuneLength = 20
+  # tuneLength = 10
   # metric = "accuracy"
   # train.control = ctrl
-  ####################################################################
 
   call <- match.call()
   type <- match.arg(type)
@@ -315,10 +343,13 @@ trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLe
     allFolds <- tc$foldIdx
     repeats <- length(allFolds)
     folds <- length(allFolds[[1]])
+
+    tc$repeats <- repeats
+    tc$folds <- folds
   }
 
   tuningRes <- tuningResults <- NULL
-  tuneGrid <- expand.grid(rho = rhos, epsilon = tc$epsilon)
+  tuneGrid <- expand.grid(rho = rhos, epsilon = tc$phi.epsilon)
 
   # for each fold within each repat, fit a plda model.
   # tuningResults <- foreach(iii = 1:nrow(tuneGrid), .combine = "c", .inorder = TRUE, .verbose = FALSE,
@@ -343,7 +374,7 @@ trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLe
       # out <- nblda(x = x[-idx, ], y = y[-idx], xte = x[idx, ], rhos = rhos, beta = tc$beta, type = type,
       #              prior = tc$prior, transform = FALSE, alpha = alpha, truephi = tc$true.dispersions,
       #              target = tc$target, normalize.target = tc$normalize.target, delta = tc$delta,
-      #              return.selected.gene.names = tc$return.selected.gene.names)
+      #              return.selected.features = tc$return.selected.features)
 
       err.i <- nonzero.i <- acc.i <- NULL
       for (i in 1:length(out)){
@@ -385,7 +416,7 @@ trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLe
 
   # Set transform to FALSE since data is already transformed above.
   final.model <- nblda(x = x, y = y, xte = NULL, rhos = best.rho, beta = tc$beta, type = type, prior = tc$prior,
-                       transform = FALSE, alpha = alpha, return.selected.gene.names = tc$return.selected.gene.names,
+                       transform = FALSE, alpha = alpha, return.selected.features = tc$return.selected.features,
                        truephi = tc$truephi, target = tc$target, normalize.target = tc$normalize.target,
                        delta = tc$delta, phi.epsilon = tc$phi.epsilon)
 

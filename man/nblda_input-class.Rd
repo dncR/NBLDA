@@ -7,9 +7,6 @@
 \description{
 This object is the subclass for NBLDA package. It stores input objects, i.e. count data and class labels.
 }
-\note{
-nblda_input icerisinde yer alan slotlarin aciklamalari burada verilecek.
-}
 \section{Slots}{
 
 

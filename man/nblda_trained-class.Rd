@@ -7,9 +7,6 @@
 \description{
 This object is the subclass for NBLDA package. It stores cross-validated results and the final model.
 }
-\note{
-nblda_trained icerisinde yer alan slotlarin aciklamalari burada verilecek.
-}
 \section{Slots}{
 
 

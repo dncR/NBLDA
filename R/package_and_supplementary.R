@@ -21,7 +21,7 @@
 #'
 #' -----------------
 #'
-#' Maintainers:
+#' \strong{Maintainers:}
 #'
 #' Dincer Goksuluk (Correspondence), \email{dincer.goksuluk@hacettepe.edu.tr}
 #'

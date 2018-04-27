@@ -9,7 +9,7 @@
 #' to make the proposed algorithm be available through CRAN. Detailed information about mathematical backgrounds can be found in the references
 #' given below.
 #'
-#' @seealso \code{\link{PoiClaClu}}
+#' @seealso \url{https://cran.r-project.org/web/packages/PoiClaClu/index.html}
 #'
 #' \tabular{ll}{
 #'   Package: \tab NBLDA\cr

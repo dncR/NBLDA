@@ -1,7 +1,7 @@
 Package: NBLDA
 Type: Package
 Title: Negative Binomial Linear Discriminant Analysis
-Version: 0.99
+Version: 0.99.1
 Date: 2018-05-01
 Author: Dincer Goksuluk
 Maintainer: Dincer Goksuluk <dincer.goksuluk@hacettepe.edu.tr>

@@ -29,7 +29,7 @@ names(allFolds) <- paste("Repeat.", 1:rpt, sep = "")
 
 
 # PLDA vs NBLDA
-ctrl <- ctrl2 <- nbldaControl(folds = 5, repeats = 3, foldIdx = allFolds, phi.epsilon = 0.1, transform = FALSE,
+ctrl <- ctrl2 <- nbldaControl(folds = 5, repeats = 3, foldIdx = allFolds, phi.epsilon = 0.1, transform = FALSE, rhos = 0,
                          truephi = NULL, target = 0, normalize.target = TRUE, delta = NULL, return.selected.gene.names = TRUE)
 
 ctrl2$truephi <- 0

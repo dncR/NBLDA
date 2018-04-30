@@ -323,6 +323,8 @@ trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLe
     }
 
     tc$rhos <- rhos <- seq(0, max(maxrho, na.rm = TRUE) * (2/3), len = tuneLength)
+  } else {
+    rhos <- tc$rhos
   }
 
   # 2. For each parameter set do

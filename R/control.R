@@ -73,8 +73,13 @@ nbldaControl <- function(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL, be
                          phi.epsilon = 0.15, normalize.target = FALSE, delta = NULL, return.selected.features = FALSE,
                          multicore = FALSE, ...){
 
-  if (repeats <= 0 | is.null(repeats)){
-    repeats <- 1
+  if (is.null(foldIdx)){
+    if (repeats <= 0 | is.null(repeats)){
+      repeats <- 1
+    }
+  } else {
+    repeats <- length(foldIdx)
+    folds <- length(foldIdx[[1]])
   }
 
   list(folds = folds, repeats = repeats, foldIdx = foldIdx, rhos = rhos, phi.epsilon = phi.epsilon, beta = beta,

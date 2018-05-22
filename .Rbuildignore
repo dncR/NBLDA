@@ -1,6 +1,8 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-example.R
+R.gitignore
 README.Rmd
 NEWS
-TODOs.txt
+
+# Ignored folders
+IgnoredFiles/

@@ -126,8 +126,8 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
     id.inf <- NULL
   }
 
-  if (length(rhos) == 1){
-    ds <- GetD(ns = ns, x = x, y = y, rho = rhos, beta = beta)
+  save <- lapply(rhos, function(u){
+    ds <- GetD(ns = ns, x = x, y = y, rho = u, beta = beta)
     discriminant <- matrix(NA, nrow = nrow(xte), ncol = length(uniq))
 
     # NBLDA
@@ -138,79 +138,33 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 
       part3 <- inv.phihat * log(part2)
       if (!is.null(id.inf)){
-        part3.limits <- t(nste[ ,id.inf]) * dstar[id.inf]
+        part3.limits <- t(nste[ ,id.inf])*dstar[id.inf]
         part3[id.inf, ] <- part3.limits  # Replace zero dispersed genes with limit values.
       }
 
       discriminant[ ,k] <- rowSums(xte * t(log(part1))) - colSums(part3) + log(prior[k])
     }
 
-    if (return.selected.features){
-      selectedFeaturesIdx.ds <- apply(ds, 2, function(x){
-        all(x != 1)
-      })
+    # Feature selection
+    selectedFeaturesIdx.ds <- apply(ds, 2, function(x){
+      all(x != 1)
+    })
 
-      selectedFeaturesIdx.disperhat <- disperhat != 0
-      selectedFeaturesIdx <- which(selectedFeaturesIdx.ds | selectedFeaturesIdx.disperhat)
-      selectedFeaturesNames <- colnames(x)[selectedFeaturesIdx]
+    selectedFeaturesIdx.disperhat <- disperhat != 0
+    selectedFeaturesIdx <- which(selectedFeaturesIdx.ds | selectedFeaturesIdx.disperhat)
+    selectedFeaturesNames <- colnames(x)[selectedFeaturesIdx]
 
-      ## If all features are selected, return NULL.
-      if (length(selectedFeaturesNames) == ncol(x)){
-        selectedFeaturesIdx <- selectedFeaturesNames <- NULL
-      }
-    } else {
+    ## If all features are selected, return NULL.
+    if (length(selectedFeaturesNames) == ncol(x)){
       selectedFeaturesIdx <- selectedFeaturesNames <- NULL
     }
 
-
-    save <- list(list(ns = ns, nste = nste, ds = ds, discriminant = discriminant, ytehat = uniq[apply(discriminant, 1, which.max)],
-                      alpha = alpha, rho = rhos, x = x, y = y, xte = xte, type = type, prior = prior, dispersions = disperhat.list,
-                      transform = transform, trainParameters = null.out,
-                      selectedFeatures = list(idx = selectedFeaturesIdx, names = selectedFeaturesNames)))
-  } else {
-    save <- lapply(rhos, function(u){
-      ds <- GetD(ns = ns, x = x, y = y, rho = u, beta = beta)
-      discriminant <- matrix(NA, nrow = nrow(xte), ncol = length(uniq))
-
-      # NBLDA
-      for (k in 1:length(uniq)){
-        dstar = ds[k, ]
-        part2 = 1 + t(nste) * dstar * phihat
-        part1 = dstar/part2
-
-        part3 <- inv.phihat * log(part2)
-        if (!is.null(id.inf)){
-          part3.limits <- t(nste[ ,id.inf])*dstar[id.inf]
-          part3[id.inf, ] <- part3.limits  # Replace zero dispersed genes with limit values.
-        }
-
-        discriminant[ ,k] <- rowSums(xte * t(log(part1))) - colSums(part3) + log(prior[k])
-      }
-
-      if (return.selected.features){
-        selectedFeaturesIdx.ds <- apply(ds, 2, function(x){
-          all(x != 1)
-        })
-
-        selectedFeaturesIdx.disperhat <- disperhat != 0
-        selectedFeaturesIdx <- which(selectedFeaturesIdx.ds | selectedFeaturesIdx.disperhat)
-        selectedFeaturesNames <- colnames(x)[selectedFeaturesIdx]
-
-        ## If all features are selected, return NULL.
-        if (length(selectedFeaturesNames) == ncol(x)){
-          selectedFeaturesIdx <- selectedFeaturesNames <- NULL
-        }
-      } else {
-        selectedFeaturesIdx <- selectedFeaturesNames <- NULL
-      }
-
-      save.i <- list(ns = ns, nste = nste, ds = ds, discriminant = discriminant, ytehat = uniq[apply(discriminant, 1, which.max)],
-                     alpha = alpha, rho = u, x = x, y = y, xte = xte, type = type, prior = prior, dispersions = disperhat.list,
-                     transform = transform, trainParameters = null.out,
-                     selectedFeatures = list(idx = selectedFeaturesIdx, names = selectedFeaturesNames))
-      save.i
-    })
-  }
+    save.i <- list(ns = ns, nste = nste, ds = ds, discriminant = discriminant, ytehat = uniq[apply(discriminant, 1, which.max)],
+                   alpha = alpha, rho = u, x = x, y = y, xte = xte, type = type, prior = prior, dispersions = disperhat.list,
+                   transform = transform, trainParameters = null.out,
+                   selectedFeatures = list(idx = selectedFeaturesIdx, names = selectedFeaturesNames))
+    save.i
+  })
 
   # class(save) <- "poicla"
   return(save)
@@ -291,7 +245,7 @@ trainNBLDA <- function(x, y, type = c("mle", "deseq", "quantile", "tmm"), tuneLe
   # type = "deseq"
   # tuneLength = 10
   # metric = "accuracy"
-  # train.control = ctrl
+  # train.control = ctrl2
 
   call <- match.call()
   type <- match.arg(type)

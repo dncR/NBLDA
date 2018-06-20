@@ -25,7 +25,6 @@
 #' See \code{\link[sSeq]{getT}} for details.
 #' @param delta a weight within the interval [0, 1] that is used while shrinking dispersions towards 0. When "delta = 0", initial dispersion estimates
 #' are forced to be shrinked to 1. Similarly, if "delta = 0", no shrinkage is performed on initial estimates.
-#' @param return.selected.features a logical. Should the selected genes' names be returned?
 #' @param multicore a logical. If a parallel backend is loaded and available, the function runs in parallel CPUs.
 #' @param ... further arguements passed to \code{\link{trainNBLDA}}.
 #'
@@ -70,8 +69,7 @@
 #' @export
 nbldaControl <- function(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL, beta = 1,
                          prior = NULL, transform = FALSE, alpha = NULL, truephi = NULL, target = 0,
-                         phi.epsilon = 0.15, normalize.target = FALSE, delta = NULL, return.selected.features = FALSE,
-                         multicore = FALSE, ...){
+                         phi.epsilon = 0.15, normalize.target = FALSE, delta = NULL, multicore = FALSE, ...){
 
   if (is.null(foldIdx)){
     if (repeats <= 0 | is.null(repeats)){
@@ -84,6 +82,5 @@ nbldaControl <- function(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL, be
 
   list(folds = folds, repeats = repeats, foldIdx = foldIdx, rhos = rhos, phi.epsilon = phi.epsilon, beta = beta,
        prior = prior, transform = transform, alpha = alpha, truephi = truephi,
-       target = target, normalize.target = normalize.target, delta = delta,
-       return.selected.features = return.selected.features, multicore = multicore, ...)
+       target = target, normalize.target = normalize.target, delta = delta, multicore = multicore, ...)
 }

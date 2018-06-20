@@ -7,8 +7,7 @@
 nbldaControl(folds = 5, repeats = 2, foldIdx = NULL, rhos = NULL,
   beta = 1, prior = NULL, transform = FALSE, alpha = NULL,
   truephi = NULL, target = 0, phi.epsilon = 0.15,
-  normalize.target = FALSE, delta = NULL,
-  return.selected.features = FALSE, multicore = FALSE, ...)
+  normalize.target = FALSE, delta = NULL, multicore = FALSE, ...)
 }
 \arguments{
 \item{folds}{A positive integer. The number of folds for k-fold model validation.}
@@ -46,8 +45,6 @@ See \code{\link[sSeq]{getT}} for details.}
 
 \item{delta}{a weight within the interval [0, 1] that is used while shrinking dispersions towards 0. When "delta = 0", initial dispersion estimates
 are forced to be shrinked to 1. Similarly, if "delta = 0", no shrinkage is performed on initial estimates.}
-
-\item{return.selected.features}{a logical. Should the selected genes' names be returned?}
 
 \item{multicore}{a logical. If a parallel backend is loaded and available, the function runs in parallel CPUs.}
 

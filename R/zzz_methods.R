@@ -2,14 +2,6 @@
 # NOTE: If setMethod is included in the same file with the corresponding function 'predict.nblda', then aliases
 # are not required to be defined.
 
-##### Predictions ######
-#' @rdname predict
-#' @aliases predict,nblda-method
-#'
-#' @export
-setMethod(f = "predict", signature = signature(object = "nblda"), definition = predict.nblda)
-
-
 ###### Show Methods  ########
 
 #' @title Show Method for the S4 classes in NBLDA Package
@@ -429,3 +421,24 @@ setMethod(f = "selectedFeatures", signature = signature(object = "nblda"), funct
 setMethod(f = "selectedFeatures", signature = signature(object = "nblda_trained"), function(object){
   object@finalModel$selectedFeatures
 })
+
+
+##### Plots ######
+#' @rdname plot
+#' @aliases plot,nblda-method
+#'
+#' @export
+setMethod(f = "plot", signature = signature(x = "nblda"), definition = plot.nblda)
+
+#' @rdname plot
+#' @aliases plot,nblda_trained-method
+#'
+#' @export
+setMethod(f = "plot", signature = signature(x = "nblda_trained"), definition = plot.nblda_trained)
+
+##### Predictions ######
+#' @rdname predict
+#' @aliases predict,nblda-method
+#'
+#' @export
+setMethod(f = "predict", signature = signature(object = "nblda"), definition = predict.nblda)

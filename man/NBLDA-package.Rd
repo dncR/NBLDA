@@ -20,7 +20,7 @@ Dong, K., Zhao, H., Tong, T., & Wan, X. (2016). NBLDA: negative binomial linear 
 BMC Bioinformatics, 17(1), 369. http://doi.org/10.1186/s12859-016-1208-1
 }
 \seealso{
-\url{https://cran.r-project.org/web/packages/PoiClaClu/index.html}
+\url{https://CRAN.R-project.org/package=PoiClaClu}
 
 \tabular{ll}{
   Package: \tab NBLDA\cr

@@ -50,7 +50,7 @@
 #' @import ggplot2
 #'
 #' @method plot nblda
-plot.nblda <- function(x, y, ..., theme = c("nblda", "default"), metric = c("error", "accuracy", "sparsity"),
+plot.nblda <- function(x, y, ..., theme = c("nblda", "default"), metric = c("accuracy", "error", "sparsity"),
                        return = c("plot", "aes")){
   theme <- match.arg(theme)
   metric <- match.arg(metric)
@@ -118,71 +118,4 @@ plot.nblda <- function(x, y, ..., theme = c("nblda", "default"), metric = c("err
 
 #' @rdname plot
 #' @method plot nblda_trained
-plot.nblda_trained <- function(x, y, ..., theme = c("nblda", "default"), metric = c("error", "accuracy", "sparsity"),
-                               return = c("plot", "aes")){
-  theme <- match.arg(theme)
-  metric <- match.arg(metric)
-  return <- match.arg(return)
-
-  if (all(missing(x), missing(y))){
-    stop("At least one of 'x' or 'y' should be given. Both can not be missing or NULL.")
-  }
-
-  if (missing(x) || is.null(x)){
-    if (is.null(y)){
-      stop("'y' can not be NULL when 'x' is missing or NULL.")
-    }
-    warning("'x' is not given. Plot object is imported from 'y'.")
-    x <- y
-  }
-
-  if (!(class(x) %in% c("nblda", "nblda_trained"))){
-    stop("'object' should be an object of classes 'nblda' or 'nblda_trained'.")
-  }
-
-  .theme_default <- theme_grey(base_size = 12)  # Default theme
-
-  ## Set plot theme.
-  if (theme == "nblda"){
-    .theme <- theme_bw(base_size = 12) + theme(axis.title = element_text(face = "bold", colour = "#444444"),
-                                               axis.title.x = element_text(margin = margin(10, 0, 0, 0)),
-                                               axis.title.y = element_text(margin = margin(0, 10, 0, 0)),
-                                               axis.text.x = element_text(margin = margin(5, 0, 0, 0)),
-                                               axis.text.y = element_text(margin = margin(0, 5, 0, 0)))
-    line_color <- point_color <- "#3a8fff"
-  } else {
-    .theme <- .theme_default
-    line_color <- point_color <- "black"
-  }
-
-  .data <- data.frame(x@crossValidated$tuning.results)
-  if (metric == "error"){
-    aes_y <- "errors"
-    y_lab <- "Average number of errors (cross-validated)"
-  } else if (metric == "accuracy"){
-    aes_y <- "accuracy"
-    y_lab <- "Average classification accuracy (cross-validated)"
-  } else {
-    aes_y <- "nonzero"
-    y_lab <- "Average number of selected features (cross-validated)"
-  }
-
-  p <- ggplot(.data, aes_string(x = "rho", y = aes_y), ...) +
-    xlab("Threshold parameter (rho)") +
-    ylab(y_lab) + .theme
-
-  if (return == "plot"){
-    if (nrow(.data) >= 2){
-      p <- p + geom_line(color = line_color) +
-        geom_point(color = point_color, pch = 21, fill = "white", size = 1.8)
-    } else {
-      p <- p + geom_point(color = point_color, pch = 21, fill = "white")
-    }
-  }
-  p
-}
-
-
-
-
-
+plot.nblda_trained <- plot.nblda

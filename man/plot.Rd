@@ -10,16 +10,16 @@
 \title{Plot Method for the \code{nblda} and \code{nblda_trained} Classes}
 \usage{
 \method{plot}{nblda}(x, y, ..., theme = c("nblda", "default"),
-  metric = c("error", "accuracy", "sparsity"), return = c("plot", "aes"))
+  metric = c("accuracy", "error", "sparsity"), return = c("plot", "aes"))
 
 \method{plot}{nblda_trained}(x, y, ..., theme = c("nblda", "default"),
-  metric = c("error", "accuracy", "sparsity"), return = c("plot", "aes"))
+  metric = c("accuracy", "error", "sparsity"), return = c("plot", "aes"))
 
 \S4method{plot}{nblda}(x, y, ..., theme = c("nblda", "default"),
-  metric = c("error", "accuracy", "sparsity"), return = c("plot", "aes"))
+  metric = c("accuracy", "error", "sparsity"), return = c("plot", "aes"))
 
 \S4method{plot}{nblda_trained}(x, y, ..., theme = c("nblda", "default"),
-  metric = c("error", "accuracy", "sparsity"), return = c("plot", "aes"))
+  metric = c("accuracy", "error", "sparsity"), return = c("plot", "aes"))
 }
 \arguments{
 \item{x}{a \code{nblda} object returned from \code{\link{trainNBLDA}} or \code{nblda_trained} object returned from \code{\link{nbldaTrained}}.}

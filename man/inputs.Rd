@@ -15,7 +15,6 @@
 This slot stores the input data for trained model.
 }
 \examples{
-\dontrun{
 set.seed(2128)
 counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -28,7 +27,6 @@ fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
                   metric = "accuracy", train.control = ctrl)
 
 inputs(fit)
-}
 
 }
 \seealso{

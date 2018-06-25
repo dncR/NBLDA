@@ -43,7 +43,6 @@ This function predicts the class labels of test data for a given model.
 factor for subject i, g_j is the total count of variable j and d_kj is the offset parameter for variable j at class k.
 }
 \examples{
-\dontrun{
 set.seed(2128)
 counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -56,7 +55,6 @@ fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
                   metric = "accuracy", train.control = ctrl)
 
 predict(fit, xte)
-}
 
 }
 \author{

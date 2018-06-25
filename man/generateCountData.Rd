@@ -35,12 +35,10 @@ different among K classes. The remaining part is assumed to be having no contrib
 This function can be used to generate counts, e.g RNA-Sequencing data, for both classification and clustering purposes.
 }
 \examples{
-\dontrun{
 set.seed(2128)
 counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
                             allZero.rm = FALSE, tag.samples = TRUE)
 head(counts$x)
-}
 
 }
 \author{

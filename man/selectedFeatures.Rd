@@ -27,7 +27,6 @@ If \code{return.selected.features} = FALSE within \code{\link{nbldaControl}} or 
 are selected and used in discrimination function, \code{idx} and \code{names} are returned NULL.
 }
 \examples{
-\dontrun{
 set.seed(2128)
 counts <- generateCountData(n = 20, p = 50, K = 2, param = 1, sdsignal = 0.5, DE = 0.6,
                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -41,7 +40,6 @@ fit <- trainNBLDA(x = x, y = y, type = "mle", tuneLength = 10,
                   metric = "accuracy", train.control = ctrl)
 
 selectedFeatures(fit)
-}
 
 }
 \seealso{

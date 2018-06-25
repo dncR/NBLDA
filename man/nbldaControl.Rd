@@ -73,9 +73,7 @@ very small overdispersions towards 0. If estimated overdispersion is below \code
 threshold value is set to 0. Hence, all the variables with very small overdispersion are included in the NBLDA model.
 }
 \examples{
-\dontrun{
 nbldaControl()  # return default control parameters.
-}
 
 }
 \references{

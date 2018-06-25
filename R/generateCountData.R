@@ -21,12 +21,10 @@
 #' @author Dincer Goksuluk
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
 #' head(counts$x)
-#' }
 #'
 #' @name generateCountData
 #' @rdname generateCountData

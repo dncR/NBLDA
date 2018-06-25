@@ -28,13 +28,11 @@
 #' @seealso \code{\link[sSeq]{getT}}, \code{\link[sSeq]{getAdjustDisp}}
 #'
 #' @examples
-#' \dontrun{
-#' set.seed(1)
+#' set.seed(2128)
 #' initial <- runif(10, 0, 4)
 #'
 #' getShrinkedDispersions(initial, 0)  # shrink towards 0.
 #' getShrinkedDispersions(initial, 0, delta = 1)  # force to shrink 0.
-#' }
 #'
 #' @name getShrinkedDispersions
 #' @rdname getShrinkedDispersions

@@ -59,9 +59,7 @@
 #' @seealso \code{\link[sSeq]{getT}}, \code{\link[sSeq]{getAdjustDisp}}
 #'
 #' @examples
-#' \dontrun{
 #' nbldaControl()  # return default control parameters.
-#' }
 #'
 #' @name nbldaControl
 #' @rdname nbldaControl

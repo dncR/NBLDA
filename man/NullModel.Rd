@@ -29,7 +29,6 @@ while normalizing training sets are also returned in order to normalize test set
 These functions are copied from \code{PoiClaClu} package and modified here to make "tmm" and "none" methods available.
 }
 \examples{
-\dontrun{
 set.seed(2128)
 counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -37,11 +36,10 @@ x <- counts$x
 xte <- counts$xte
 
 x.out <- NullModel(x, "mle")
-x$n ## Normalized counts using "mle" method
+x.out$n ## Normalized counts using "mle" method
 
 xte.out <- NullModelTest(x.out, xte)
 xte.out$n  # Normalized counts for test set using train set parameters.
-}
 
 }
 \author{

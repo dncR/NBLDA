@@ -13,7 +13,6 @@
 #' @author Dincer Goksuluk
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -28,7 +27,6 @@
 #' show(fit)
 #' show(inputs(fit))
 #' show(nbldaTrained(fit))
-#' }
 #'
 #' @name show
 #' @rdname show
@@ -223,7 +221,6 @@ setMethod(f = "show", signature = signature(object = "nblda_input"), definition 
 #' @seealso \code{\link{trainNBLDA}}
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -236,7 +233,6 @@ setMethod(f = "show", signature = signature(object = "nblda_input"), definition 
 #'                   metric = "accuracy", train.control = ctrl)
 #'
 #' normalization(fit)
-#'}
 #'
 #'@export
 setMethod(f = "normalization", signature = signature(object = "nblda"), function(object){
@@ -268,7 +264,6 @@ setMethod(f = "normalization", signature = signature(object = "nblda_trained"), 
 #' @seealso \code{\link{trainNBLDA}}
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -281,7 +276,6 @@ setMethod(f = "normalization", signature = signature(object = "nblda_trained"), 
 #'                   metric = "accuracy", train.control = ctrl)
 #'
 #' control(fit)
-#'}
 #'
 #'@export
 setMethod(f = "control", signature = signature(object = "nblda"), function(object){
@@ -311,7 +305,6 @@ setMethod(f = "control", signature = signature(object = "nblda_trained"), functi
 #' @seealso \code{\link{trainNBLDA}}
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -324,7 +317,6 @@ setMethod(f = "control", signature = signature(object = "nblda_trained"), functi
 #'                   metric = "accuracy", train.control = ctrl)
 #'
 #' nbldaTrained(fit)
-#'}
 #'
 #'@export
 setMethod(f = "nbldaTrained", signature = signature(object = "nblda"), function(object){
@@ -353,7 +345,6 @@ setMethod(f = "nbldaTrained", signature = signature(object = "nblda_trained"), f
 #' @seealso \code{\link{trainNBLDA}}
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -366,7 +357,6 @@ setMethod(f = "nbldaTrained", signature = signature(object = "nblda_trained"), f
 #'                   metric = "accuracy", train.control = ctrl)
 #'
 #' inputs(fit)
-#'}
 #'
 #'@export
 setMethod(f = "inputs", signature = signature(object = "nblda"), function(object){
@@ -395,7 +385,6 @@ setMethod(f = "inputs", signature = signature(object = "nblda"), function(object
 #' @seealso \code{\link{trainNBLDA}}, \code{\linkS4class{nblda}}, \code{\linkS4class{nblda_trained}}
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 50, K = 2, param = 1, sdsignal = 0.5, DE = 0.6,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -409,7 +398,6 @@ setMethod(f = "inputs", signature = signature(object = "nblda"), function(object
 #'                   metric = "accuracy", train.control = ctrl)
 #'
 #' selectedFeatures(fit)
-#'}
 #'
 #'@export
 setMethod(f = "selectedFeatures", signature = signature(object = "nblda"), function(object){

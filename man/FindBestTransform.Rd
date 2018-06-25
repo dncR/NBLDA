@@ -23,14 +23,12 @@ linear model, is selected using a grid search within the interval [0, 1].
 This function is copied from \code{PoiClaClu} package and modified to control the total number of grid search.
 }
 \examples{
-\dontrun{
 set.seed(2128)
 counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
                             allZero.rm = FALSE, tag.samples = TRUE)
 
 x <- counts$x
 FindBestTransform(x)
-}
 
 }
 \author{

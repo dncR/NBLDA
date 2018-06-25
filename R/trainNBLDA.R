@@ -217,7 +217,6 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #' Genome Biology, 11:R25, doi:10.1186/gb-2010-11-3-r25
 #'
 #' @examples
-#' \dontrun{
 #' set.seed(2128)
 #' counts <- generateCountData(n = 20, p = 10, K = 2, param = 1, sdsignal = 0.5, DE = 0.8,
 #'                             allZero.rm = FALSE, tag.samples = TRUE)
@@ -231,7 +230,6 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #'
 #' fit
 #' nbldaTrained(fit)  # Cross-validated model summary.
-#' }
 #'
 #' @name trainNBLDA
 #' @rdname trainNBLDA

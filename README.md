@@ -1,7 +1,10 @@
 ## Introduction
+
+<!--
 [![Build Status](http://bioconductor.org/shields/build/release/bioc/MLSeq.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/MLSeq/)
 [![Downloads](http://bioconductor.org/shields/downloads/MLSeq.svg)](http://bioconductor.org/packages/stats/bioc/MLSeq/)
 [![InBioc](http://bioconductor.org/shields/years-in-bioc/MLSeq.svg)](http://bioconductor.org/packages/devel/bioc/html/MLSeq.html#since)
+-->
 
 <br>
 

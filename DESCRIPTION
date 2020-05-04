@@ -3,7 +3,7 @@ Type: Package
 Title: Negative Binomial Linear Discriminant Analysis
 Version: 1.0.0
 Date: 2020-05-04
-Authors@R: c(person("Dincer", "Goksuluk", role = c("aut", "cre"), email = "dincer.goksuluk@hacettepe.edu.tr"),
+Authors@R: c(person("Dincer", "Goksuluk", role = c("aut", "cre"), email = "dincergoksuluk@erciyes.edu.tr"),
   person("Gokmen", "Zararsiz", role = c("aut")),
   person("Selcuk", "Korkmaz", role = c("aut")),
   person(c("Ahmet", "Ergun"), "Karaagaoglu", role = c("ths", "aut")))

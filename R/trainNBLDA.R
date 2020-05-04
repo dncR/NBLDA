@@ -238,7 +238,6 @@ nblda <- function(x, y, xte = NULL, rhos = 0, beta = 1, type = c("mle", "deseq",
 #' @name trainNBLDA
 #' @rdname trainNBLDA
 #'
-#' @importFrom sSeq getT getAdjustDisp rowVars
 #' @importFrom methods new
 #'
 #' @export

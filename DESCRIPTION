@@ -1,7 +1,7 @@
 Package: NBLDA
 Type: Package
 Title: Negative Binomial Linear Discriminant Analysis
-Version: 0.99.3
+Version: 0.99.4
 Date: 2018-06-19
 Authors@R: c(person("Dincer", "Goksuluk", role = c("aut", "cre"), email = "dincer.goksuluk@hacettepe.edu.tr"),
   person("Gokmen", "Zararsiz", role = c("aut")),
@@ -20,7 +20,7 @@ Depends:
 License: GPL(>=2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.0
 Collate: 
   'FindBestTransform.R'
   'all_classes.R'
@@ -35,4 +35,3 @@ Collate:
   'predict.nblda.R'
   'trainNBLDA.R'
   'zzz_methods.R'
-

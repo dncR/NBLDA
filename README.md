@@ -1,10 +1,7 @@
 ## Introduction
 
-<!--
-[![Build Status](http://bioconductor.org/shields/build/release/bioc/MLSeq.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/MLSeq/)
-[![Downloads](http://bioconductor.org/shields/downloads/MLSeq.svg)](http://bioconductor.org/packages/stats/bioc/MLSeq/)
-[![InBioc](http://bioconductor.org/shields/years-in-bioc/MLSeq.svg)](http://bioconductor.org/packages/devel/bioc/html/MLSeq.html#since)
--->
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/NBLDA)](http://cran.r-project.org/web/packages/NBLDA)
+[![Downloads](http://cranlogs.r-pkg.org/badges/NBLDA)](http://cran.rstudio.com/package=NBLDA)
 
 <br>
 
@@ -25,18 +22,18 @@ If you use NBLDA package in your research, please cite it as below:
 To get BibTeX entry for LaTeX users, type the following:
 
 ```{r, eval = FALSE}
-citation("MLSeq")
+citation("NBLDA")
 ```
 
 <br>
 
 Please contact us, if you have any questions or suggestions:
 
-  dincer.goksuluk@hacettepe.edu.tr
+  dincergoksuluk@erciyes.edu.tr
 
 ## News:
 
-#### Initial version (1.0)
+#### First Release (1.0)
 * Poisson (PLDA) and Negative Binomail Linear Discriminant (NBLDA) functions included.
 * Sparse version of NBLDA is proposed.
 * Vignette is not available. It will be released with next version.

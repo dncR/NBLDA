@@ -1,8 +1,13 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+NBLDA.Rproj
+
 R.gitignore
 README.Rmd
+README.md
+
 NEWS
+NEWS.md
 
 # Ignored folders
 IgnoredFiles/

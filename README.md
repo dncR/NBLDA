@@ -15,7 +15,7 @@ install.packages("NBLDA")
 
 If you use NBLDA package in your research, please cite it as below:
 
-> Dincer Goksuluk, Gokmen Zararsiz, Selcuk Korkmaz and Ahmet Ergun Karaagaoglu (2018). NBLDA: Negative Binomial Linear Discriminant Analysis. R package
+> Dincer Goksuluk, Gokmen Zararsiz, Selcuk Korkmaz and Ahmet Ergun Karaagaoglu (<YEAR_here>). NBLDA: Negative Binomial Linear Discriminant Analysis. R package
   version "use_package_version_here".
 
 

@@ -3,11 +3,11 @@
 # importFrom(sSeq,rowVars)
 
 #' @importFrom stats quantile var cov
-getT <- function (countsTable, sizeFactors = NULL, q.vec = NULL,
-                  numPart = 1, propForSigma = c(0, 1), verbose = TRUE, shrinkTarget = NULL,
-                  shrinkQuantile = NULL, shrinkVar = FALSE, eSlope = 0.05,
-                  disp = NULL, dispXX = NULL, normalize = FALSE, lwd1 = 4.5,
-                  cexlab1 = 1.2) {
+getT <- function(countsTable, sizeFactors = NULL, q.vec = NULL,
+                 numPart = 1, propForSigma = c(0, 1), verbose = TRUE, shrinkTarget = NULL,
+                 shrinkQuantile = NULL, shrinkVar = FALSE, eSlope = 0.05,
+                 disp = NULL, dispXX = NULL, normalize = FALSE, lwd1 = 4.5,
+                 cexlab1 = 1.2) {
   # This function is copied from the Bioconductor package "sSeq" in order to prevent
   # R-build error produced by "r-release-osx-x86_64" and "r-oldrel-osx-x86_64" machines.
   # The produced error is:
@@ -203,7 +203,7 @@ getT <- function (countsTable, sizeFactors = NULL, q.vec = NULL,
 
 #' @importFrom stats quantile var
 getAdjustDisp <- function(obs, propForSigma = c(0.5, 1), shrinkTarget = NULL,
-          shrinkQuantile = NULL, verbose = TRUE){
+                          shrinkQuantile = NULL, verbose = TRUE){
   # This function is copied from the Bioconductor package "sSeq" in order to prevent
   # R-build error produced by "r-release-osx-x86_64" and "r-oldrel-osx-x86_64" machines.
   # The produced error is:

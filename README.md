@@ -1,7 +1,9 @@
 ## Introduction
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/NBLDA)](http://cran.r-project.org/web/packages/NBLDA)
-[![Downloads](http://cranlogs.r-pkg.org/badges/NBLDA)](http://cran.rstudio.com/package=NBLDA)
+[![CRAN_version](http://www.r-pkg.org/badges/version/NBLDA)](https://cran.r-project.org/package=NBLDA)
+[![CRAN_download](http://cranlogs.r-pkg.org/badges/NBLDA)](https://cran.r-project.org/package=NBLDA)
+[![CRAN_download_total](http://cranlogs.r-pkg.org/badges/grand-total/NBLDA)](https://cran.r-project.org/package=NBLDA)
+
 
 <br>
 
@@ -11,6 +13,12 @@ To install the NBLDA package in R:
 
 ```{r, eval = FALSE, message=FALSE, warning=FALSE}
 install.packages("NBLDA")
+```
+
+To install the developement version of NBLDA package from GitHub:
+
+```{r, eval = FALSE, message=FALSE, warning=FALSE}
+devtools::install_github("dncR/NBLDA")
 ```
 
 If you use NBLDA package in your research, please cite it as below:

@@ -1,7 +1,7 @@
 Package: NBLDA
 Type: Package
 Title: Negative Binomial Linear Discriminant Analysis
-Version: 1.0.1
+Version: 1.0.1.9000
 Date: 2020-02-21
 Authors@R: c(person("Dincer", "Goksuluk", role = c("aut", "cre"), email = "dincergoksuluk@erciyes.edu.tr"),
   person("Gokmen", "Zararsiz", role = c("aut")),
